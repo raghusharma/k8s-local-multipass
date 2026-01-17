@@ -239,6 +239,7 @@ The script includes IP address validation and waiting periods to minimize this i
 **Workaround:**
 
 ~~If the issue persists, you can modify the `setup-k8s-cluster.sh` script to launch VMs sequentially instead of in parallel by removing the `&` background operators, though this will increase setup time.~~
+
 I have added 5s sleep between VM creation. An acceptable trade-off to avoid frustating setup failures due to IP conflicts.
 
 ## Troubleshooting
