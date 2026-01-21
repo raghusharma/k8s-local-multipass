@@ -22,6 +22,7 @@ This project provides automated scripts to deploy a fully functional Kubernetes 
 - Pre-configured kubectl access from bastion
 - Helm pre-installed on bastion
 - SSH access configuration
+- Start/stop cluster management
 - One-command cluster creation and teardown
 
 ## Prerequisites
@@ -54,7 +55,7 @@ cd <repository-name>
 ### 2. Make Scripts Executable
 
 ```bash
-chmod +x setup-k8s-cluster.sh teardown-k8s-cluster.sh setup-ssh-access.sh
+chmod +x setup-k8s-cluster.sh teardown-k8s-cluster.sh setup-ssh-access.sh control-cluster.sh
 ```
 
 ### 3. Create the Cluster
@@ -92,7 +93,24 @@ kubectl get pods -A
 cilium status
 ```
 
-### 6. Tear Down the Cluster
+### 6. Control the Cluster (Start/Stop)
+Pause and resume your cluster without destroying it:
+
+```
+# Stop all VMs (saves resources when not in use)
+./control-cluster.sh stop
+
+# Start all VMs
+./control-cluster.sh start
+
+# Restart all VMs
+./control-cluster.sh restart
+
+# Check cluster status
+./control-cluster.sh status
+```
+
+### 7. Tear Down the Cluster
 
 When you're done, clean up all resources:
 
@@ -116,6 +134,25 @@ Creates the entire Kubernetes cluster including:
 ### `teardown-k8s-cluster.sh`
 
 Safely removes all cluster VMs with confirmation prompt.
+
+### `control-cluster.sh`
+
+Manages cluster VM lifecycle without destroying data:
+- **`start`** - Starts all stopped VMs
+- **`stop`** - Stops all running VMs (saves resources)
+- **`restart`** - Restarts all VMs
+- **`status`** - Shows current state of all VMs
+
+**Usage:**
+
+```bash
+./control-cluster.sh start
+./control-cluster.sh stop
+./control-cluster.sh restart
+./control-cluster.sh status
+```
+
+This is useful when you want to pause your cluster to save system resources but don't want to tear it down completely.
 
 ### `setup-ssh-access.sh`
 
@@ -172,6 +209,22 @@ POD_CIDR="10.244.0.0/16"
 ```
 
 ## Useful Commands
+
+### Cluster Control
+
+```bash
+# Check cluster status
+./control-cluster.sh status
+
+# Stop cluster (save resources)
+./control-cluster.sh stop
+
+# Start cluster
+./control-cluster.sh start
+
+# Restart cluster
+./control-cluster.sh restart
+```
 
 ### Check VM Status
 
