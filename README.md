@@ -55,7 +55,7 @@ cd <repository-name>
 ### 2. Make Scripts Executable
 
 ```bash
-chmod +x setup-k8s-cluster.sh teardown-k8s-cluster.sh setup-ssh-access.sh control-cluster.sh
+chmod +x setup-k8s-cluster.sh teardown-k8s-cluster.sh update-ssh-config.sh control-cluster.sh
 ```
 
 ### 3. Create the Cluster
@@ -81,7 +81,7 @@ kubectl get pods -A
 Set up SSH access for easier connection:
 
 ```bash
-./setup-ssh-access.sh k8s-bastion
+./update-ssh-config.sh k8s-bastion
 ssh k8s-bastion
 ```
 
@@ -154,7 +154,7 @@ Manages cluster VM lifecycle without destroying data:
 
 This is useful when you want to pause your cluster to save system resources but don't want to tear it down completely.
 
-### `setup-ssh-access.sh`
+### `update-ssh-config.sh`
 
 Configures SSH access to Multipass VMs:
 - Transfers your SSH public key to the VM
@@ -164,16 +164,16 @@ Configures SSH access to Multipass VMs:
 **Usage:**
 
 ```bash
-./setup-ssh-access.sh <vm-name>
+./update-ssh-config.sh <vm-name>
 ```
 
 **Example:**
 
 ```bash
-./setup-ssh-access.sh k8s-bastion
-./setup-ssh-access.sh k8s-control
-./setup-ssh-access.sh k8s-worker1
-./setup-ssh-access.sh k8s-worker2
+./update-ssh-config.sh k8s-bastion
+./update-ssh-config.sh k8s-control
+./update-ssh-config.sh k8s-worker1
+./update-ssh-config.sh k8s-worker2
 ```
 
 ## VM Details
@@ -328,7 +328,7 @@ multipass start k8s-bastion
 Re-run the SSH setup script:
 
 ```bash
-./setup-ssh-access.sh k8s-bastion
+./update-ssh-config.sh k8s-bastion
 ```
 
 ## Architecture Highlights
